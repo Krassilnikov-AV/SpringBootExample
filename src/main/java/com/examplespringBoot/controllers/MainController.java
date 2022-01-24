@@ -9,7 +9,7 @@ package com.examplespringBoot.controllers;
  */
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class MainController {
@@ -21,9 +21,11 @@ public class MainController {
 	}
 
 	//перенаправление ссылки
-	@GetMapping("/createLink")
-	public String createLink(Model model) {
-		model.addAttribute("title", "Приветствуем на странице по созданию короткой ссылки");
+	@PostMapping("/createLink")
+	public String createLink(String originalUrl) {
+//		originalUrl
+//			.addAttribute("title", "Приветствуем на странице по созданию короткой ссылки");
+
 		return "home";
 	}
 
