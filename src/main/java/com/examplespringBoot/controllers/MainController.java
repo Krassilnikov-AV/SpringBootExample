@@ -20,4 +20,17 @@ public class MainController {
 		return "home";
 	}
 
+	//перенаправление ссылки
+	@GetMapping("/createLink")
+	public String createLink(Model model) {
+		model.addAttribute("title", "Приветствуем на странице по созданию короткой ссылки");
+		return "home";
+	}
+
+	//перенаправление ссылки
+	@GetMapping("/mainPage")
+	public String mainPage(Model model) {
+		model.addAttribute("title", "Приветствуем на главной странице сайта");
+		return "home";
+	}
 }
