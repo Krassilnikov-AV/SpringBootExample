@@ -20,7 +20,7 @@ public class JdbcUrlDaoImpl implements UrlDao {
 	@Override
 	public void addUrl(String originalURL, String resultUrl) {
 		// добавление в БД данных ориг и коротких ссылок
-		String SQL_add_url = "INSERT INTO shorter_url(original_url, sorted_url) VALUES('?', '?')";
+		String SQL_add_url = "INSERT INTO shorter_url(original_url, shorted_url) VALUES(?, ?)";
 
 		try (Connection connection = connectionManager.getConnection();
 			 PreparedStatement preparedStatement = connection.prepareStatement(SQL_add_url)) {
