@@ -8,5 +8,8 @@ package com.examplespringBoot.dao;
  * Класс UrlDao
  */
 public interface UrlDao {
+
+
 	public void addUrl(String originalURL, String resultUrl);
+
 }

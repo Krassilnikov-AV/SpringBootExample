@@ -7,12 +7,18 @@ package com.examplespringBoot.controllers;
 /**
  * Класс MainContpoller
  */
+
+import com.examplespringBoot.services.URLGeneratorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Controller
 public class MainController {
+	@Autowired
+	private URLGeneratorService urlGeneratorService;
 
 	@GetMapping("/")
 	public String greeting(Model model) {
@@ -26,7 +32,13 @@ public class MainController {
 //		originalUrl
 //			.addAttribute("title", "Приветствуем на странице по созданию короткой ссылки");
 
-		return "home";
+
+		String baseUrl = ServletUriComponentsBuilder.fromCurrentRequest()
+			.replacePath(null)
+			.build()
+			.toUriString();
+		String shortUrl = urlGeneratorService.createURL(originalUrl, baseUrl);
+		return "shortUrl: " + shortUrl;
 	}
 
 	//перенаправление ссылки
