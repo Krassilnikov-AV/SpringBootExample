@@ -10,6 +10,7 @@ package com.examplespringBoot.dao;
 public interface UrlDao {
 
 
-	public void addUrl(String originalURL, String resultUrl);
+	void addUrl(String originalURL, String resultUrl);
 
+	String getURL(String longURL);
 }

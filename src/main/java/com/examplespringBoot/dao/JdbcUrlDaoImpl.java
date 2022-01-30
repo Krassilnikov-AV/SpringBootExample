@@ -20,7 +20,15 @@ public class JdbcUrlDaoImpl implements UrlDao {
 	@Override
 	public void addUrl(String originalURL, String resultUrl) {
 		// добавление в БД данных ориг и коротких ссылок
+		String SQL_select = "SELECT shorted_url FROM shorter_url WHERE original_url=?";
 		String SQL_add_url = "INSERT INTO shorter_url(original_url, shorted_url) VALUES(?, ?)";
+
+		try(Connection connection = connectionManager.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(SQL_select)) {
+		preparedStatement.executeQuery();	//
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 		try (Connection connection = connectionManager.getConnection();
 			 PreparedStatement preparedStatement = connection.prepareStatement(SQL_add_url)) {
@@ -30,5 +38,16 @@ public class JdbcUrlDaoImpl implements UrlDao {
 		} catch (SQLException e) {
 			throw new IllegalStateException(e);
 		}
+	}
+// SQL вызов с базы короткой URL
+//	query оригинальной  URL
+	public String getLinkURL() {
+		String SQL_shortURL="SELECT ";
+		return null;
+	}
+	@Override
+	public String getURL(String longURL) {
+
+		return null;
 	}
 }

@@ -27,16 +27,16 @@ public class MainController {
 	}
 
 	//перенаправление ссылки
-	@PostMapping("/createLink")
+	@PostMapping(value = "/createLink", produces = "application/json")
+	@ResponseBody
 	public String createLink(String originalUrl) {
-//		originalUrl
-//			.addAttribute("title", "Приветствуем на странице по созданию короткой ссылки");
-
+		if (originalUrl == null || originalUrl.isEmpty())
+			return "Invalid URL";
 
 		String baseUrl = ServletUriComponentsBuilder.fromCurrentRequest()
 			.replacePath(null)
 			.build()
-			.toUriString();
+			.toUriString(); // получение "localhost"
 		String shortUrl = urlGeneratorService.createURL(originalUrl, baseUrl);
 		return "shortUrl: " + shortUrl;
 	}

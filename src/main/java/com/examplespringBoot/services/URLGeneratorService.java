@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.MessageDigest;
-import java.util.Random;
 
 /**
  * Класс URLGeneratorServise
@@ -20,13 +19,22 @@ public class URLGeneratorService {
 
 	@Autowired
 	private UrlDao urlDao;
+
 	public String createURL(String longURL, String baseUrl) {
+
 		String resultUrl = baseUrl + "/" + shortUrl(longURL);
 		urlDao.addUrl(longURL, resultUrl);
+
 		return resultUrl;
 	}
 
-	private String shortUrl(String longURL) {
+	public String getURL(String longURL) {
+		String shortUrl = urlDao.getURL(longURL);
+		return shortUrl;
+	}
+
+
+	private static String shortUrl(String longURL) {
 		// Вы можете настроить смешанный ключ перед передачей зашифрованного MD5
 		String key = "test";
 		// Чтобы использовать символы, которые генерируют URL
@@ -41,11 +49,8 @@ public class URLGeneratorService {
 		String hex = md5ByHex(key + longURL);
 
 		String resUrl = null;
-//		for (int i = 0; i < 4; i++) {
-		Random random = new Random();
-		int i = random.nextInt(4); // производить случайные числа в пределах 4
 		// Выполнить битовую операцию И зашифрованных символов в соответствии с набором 8-битных шестнадцатеричных и 0x3FFFFFFF
-		String sTempSubString = hex.substring(i * 8, i * 8 + 8);
+		String sTempSubString = hex.substring(2 * 8, 2 * 8 + 8);
 
 		// Здесь вам нужно использовать тип long для преобразования, потому что Inteper.parseInt () может обрабатывать только 31 бит, первый бит является знаковым битом, если вы не используете long, он будет вне диапазона
 		long lHexLong = 0x3FFFFFFF & Long.parseLong(sTempSubString, 16);
@@ -58,7 +63,6 @@ public class URLGeneratorService {
 			outChars += chars[(int) index];
 			// Перемещаем 5 бит вправо каждый раз
 			lHexLong = lHexLong >> 5;
-//			}
 			// Сохраняем строку в выходном массиве соответствующего индекса
 			resUrl = outChars;
 		}
